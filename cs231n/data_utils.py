@@ -4,7 +4,8 @@ from builtins import range
 from six.moves import cPickle as pickle
 import numpy as np
 import os
-from scipy.misc import imread
+# from scipy.misc import imread # commented by Remon, check https://github.com/cs231n/cs231n.github.io/issues/190#issuecomment-517918317
+from imageio import imread # Added by remon
 import platform
 
 def load_pickle(f):
