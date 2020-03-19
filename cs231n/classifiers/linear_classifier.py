@@ -56,7 +56,9 @@ class LinearClassifier(object):
             # replacement is faster than sampling without replacement.              #
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+            indices = np.random.choice(num_train, size=batch_size)
+            X_batch = X[indices]
+            y_batch = y[indices]
             pass
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -71,7 +73,7 @@ class LinearClassifier(object):
             # Update the weights using the gradient and the learning rate.          #
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+            self.W -= learning_rate * grad
             pass
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -130,6 +132,11 @@ class LinearSVM(LinearClassifier):
 
     def loss(self, X_batch, y_batch, reg):
         return svm_loss_vectorized(self.W, X_batch, y_batch, reg)
+    
+    def predict(self, X_batch):
+      scores = X_batch.dot(self.W)
+      y = np.argmax(scores, axis=1)
+      return y
 
 
 class Softmax(LinearClassifier):

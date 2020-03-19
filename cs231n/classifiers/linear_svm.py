@@ -30,12 +30,16 @@ def svm_loss_naive(W, X, y, reg):
     for i in range(num_train):
         scores = X[i].dot(W)
         correct_class_score = scores[y[i]]
+        correct_class_idx = y[i]
         for j in range(num_classes):
             if j == y[i]:
                 continue
             margin = scores[j] - correct_class_score + 1 # note delta = 1
             if margin > 0:
                 loss += margin
+                dW[:,j] += X[i].T
+                dW[:, correct_class_idx] -= X[i].T
+
 
     # Right now the loss is a sum over all training examples, but we want it
     # to be an average instead so we divide by num_train.
@@ -43,6 +47,9 @@ def svm_loss_naive(W, X, y, reg):
 
     # Add regularization to the loss.
     loss += reg * np.sum(W * W)
+    dW /= num_train
+    dW += reg * 2 * W 
+    
 
     #############################################################################
     # TODO:                                                                     #
@@ -70,14 +77,24 @@ def svm_loss_vectorized(W, X, y, reg):
     """
     loss = 0.0
     dW = np.zeros(W.shape) # initialize the gradient as zero
-
     #############################################################################
     # TODO:                                                                     #
     # Implement a vectorized version of the structured SVM loss, storing the    #
     # result in loss.                                                           #
     #############################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+    
+    scores = X.dot(W)
+    N = len(y)
+    losses = np.maximum(0, scores - scores[range(N), y].reshape(-1,1) + 1)
+    losses[range(N), y] = 0
+    loss = np.sum(losses) / N + reg * np.sum(W ** 2)
+    C = np.zeros_like(losses, dtype=float)
+    mask = losses > 0 
+    C[mask] = 1 # contribution of wrong scores
+    m = np.sum(mask, axis=1)
+    C[range(N), y] = -m
+    dW = X.T.dot(C) / N + 2 * reg * W
     pass
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
