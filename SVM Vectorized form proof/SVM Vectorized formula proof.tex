@@ -1,0 +1,149 @@
+\documentclass[]{article}
+
+%opening
+\title{Support Vector Machine Vectorized proof}
+\author{Remon Kamal}
+
+\usepackage{amsmath} 
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+This is the proof of the vectorized form of SVM, I do this with
+lots of Matrix Math, I hope you like my latex skills
+
+\end{abstract}
+
+\section{proof}
+
+\begin{align}
+	loss &= \frac{1}{N} \sum_{i=0}^{N-1} loss_i + \lambda \left\lVert W \right\rVert_2 \label{eq:1} \\
+	loss_i &= \sum_{k=0}^{C-1} T_{ik} \label {eq:2} \\
+	% new equation
+	T_{ik} &= \begin{cases}
+	0 & \text{, $margin_{ik} \le 0$} \\
+	S_{ik} - S_{i y_j} + 1 & \text{, $margin_{ik} > 0$}
+	\end{cases} \label{eq:3} \\
+	% new equation
+\end{align}
+Where  
+\begin{align}
+	margin_{ik} &= S_{ik} - S_{i y_j} + 1 \label{eq:4} \\
+\end{align}
+And  
+\begin{align}
+	S_{ik} &= X_{i} W_{k} \label{eq:5}
+\end{align}
+\begin{align}
+	W_{k}  & \rightarrow \text{k-Coloum vector of W matrix} \label{eq:6}
+\end{align}
+\begin{align}
+	W_{k} &= W u_{k}
+\end{align}
+\begin{align}
+	u_{k} & \rightarrow \text{Unit coloum vector in direction of k}
+\end{align}
+\begin{align}
+	S_{ik} &= X_{i} W u_{k}
+\end{align}
+\begin{align}
+	\nabla_W loss &= \frac{1}{N} \nabla_W loss_i + \lambda \nabla_W ||W||_{2}^{2}
+\end{align}
+\begin{align}
+	\nabla_W ||W||_{2}^{2} &= 2 W
+\end{align}
+\begin{align}
+	\nabla_W T_{ik}	&= \begin{cases}
+	0 & \text{, $margin_{ik} \le 0$} \\
+	\nabla_W S_{ik} - \nabla_W S_{i y_j} & \text{, $margin_{ik} > 0$}
+	\end{cases}
+\end{align}
+\begin{align}
+	{\left( \nabla_W \right)}_{lm} &= \frac{ \partial }{\partial W_{lm}}
+\end{align}
+\begin{align}
+	{\left( \nabla_W S_{ik} \right)}_{lm} &= \frac{ \partial }{\partial W_{lm}} \left( X_i W u_k\right) \nonumber  \\
+	&= X_i \frac{\partial}{\partial W_{lm}} \left( W u_k \right) \nonumber \\
+	&= X_i \frac{\partial}{\partial W_{lm}} \left( u^T_k W^T \right) \nonumber \\
+	&= X_i u^T_k \frac{\partial}{\partial W_{lm}} \left(  W^T \right)
+\end{align}
+\begin{align}
+	\frac{\partial}{\partial W_{lm}} \left(  W^T \right) &= \omega^{T}_{lm}
+\end{align}
+Where $\omega_{lm}$ is a matrix full of zeros except at $index_{lm}$ which is 1
+from ... in ...
+\begin{align}
+X_i u^T_k \omega^T_{lm} = X_i \omega_{lm} u_k \\
+\omega_{lm} u_k &= \begin{cases}
+0 & k \ne l \\
+u_m & k = l
+\end{cases}
+\end{align}
+\begin{align}
+X_i \omega_{lm} u_k &= \begin{cases}
+0 & k \ne l \\
+X_i u_m = X_{im} & k = l
+\end{cases}
+\end{align} 
+Where $X_{im}$ is m\textsuperscript{th} element in $X_i$
+
+\begin{align}
+	\text{So } \nabla_W \left( S_{ik} \right) &= \left[\begin{array}{cccc}
+	0 & 0 & | & 0 \\
+	0 & 0 & X_i & 0 \\
+	0 & 0 & | & 0 \\
+	0 & 0 & k_{th}-col & 0 \\
+	\end{array}\right]
+\end{align}
+\begin{align}
+	\text{Simlarly } \nabla_W \left( S_{y_j} \right) &= \left[\begin{array}{cccc}
+	0 & 0 & | & 0 \\
+	0 & 0 & X_i & 0 \\
+	0 & 0 & | & 0 \\
+	0 & 0 & y_{j-th} col & 0 \\
+	\end{array}\right]
+\end{align}
+\begin{align}
+	\text{So } \nabla_W T_{ik} &= \begin{cases}
+	\left[\begin{array}{cccc}
+	| & 0 & | & 0 \\
+	X_i & 0 & X_i & 0 \\
+	| & 0 & | & 0 \\
+	k_{th}-col & 0 & y_{j-th}-col & 0 \\
+	\end{array}\right] & \text{, } margin_{ik} \le 0 \\
+	\text{zero-matrix} & \text{, } margin_{ik} > 0 \\
+	\end{cases}
+\end{align}
+\begin{align}
+	\nabla_W loss_{i} &= \left[\begin{array}{cccc}
+	| & 0 & | & 0 \\
+	\text{$X_i$ if $morgin_{ik} > 0$  else zeros} & 0 & -m_i X_i & 0 \\
+	| & 0 & | & 0 \\
+	k_{th}-col & 0 & y_{j-th}-col & 0 \\
+	\end{array}\right]
+\end{align}
+Where $m_i$ is the number of $margin_{ik}$ in i\textsuperscript{th} example that is greater than zero, \newline So we can assume C the cost matrix where $C_{ic}$ corresponds to the i\textsuperscript{th} example and c\textsuperscript{th} class cost where
+\begin{align}
+	C_{in} &= \begin{cases}
+	-m_i & n=y_j \text{ n is the correct label for $example_i$}\\
+	1 & margin_{in} > 0 \\
+	0 & \text{otherwise} \\
+	\end{cases}
+\end{align}
+\begin{align}
+	\left(\sum_{i}^{N} \nabla_W loss_i\right)_{lm} &= \sum_{i}^{N} C_{im} X_{il} \\
+\end{align}
+\begin{align}
+	\text{So } \sum_{i}^{N} \nabla_W loss_i &= X^T C
+\end{align}
+\begin{align}
+	\text{So the final loss expression } \nabla_W loss &= \frac{1}{N} \left( X^T C \right) +  2 \lambda W
+\end{align} 
+How about this \eqref{eq:1} Equation label
+
+\end{document}
