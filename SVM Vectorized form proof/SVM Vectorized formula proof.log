@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.2.4)  20 MAR 2020 23:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.2.4)  21 MAR 2020 15:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -543,16 +543,16 @@ e
 )
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
 (./SVM Vectorized formula proof.aux) ) 
 Here is how much of TeX's memory you used:
- 2908 strings out of 492982
- 39908 string characters out of 6134897
- 113603 words of memory out of 5000000
- 6439 multiletter control sequences out of 15000+600000
+ 2920 strings out of 492982
+ 39990 string characters out of 6134897
+ 113709 words of memory out of 5000000
+ 6451 multiletter control sequences out of 15000+600000
  9015 words of font info for 33 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,20n,30p,318b,240s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,20n,30p,318b,242s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
 ic/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
@@ -566,10 +566,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmsy7.pfb>
-Output written on "SVM Vectorized formula proof.pdf" (3 pages, 138137 bytes).
+Output written on "SVM Vectorized formula proof.pdf" (4 pages, 139788 bytes).
 PDF statistics:
- 66 PDF objects out of 1000 (max. 8388607)
- 47 compressed objects within 1 object stream
+ 69 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
