@@ -56,9 +56,10 @@ class LinearClassifier(object):
             # replacement is faster than sampling without replacement.              #
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-            indices = np.random.choice(num_train, size=batch_size)
-            X_batch = X[indices]
-            y_batch = y[indices]
+            batch_indices = np.random.choice(num_train, batch_size, replace=False)
+            X_batch = X[batch_indices]
+            y_batch = y[batch_indices]
+
             pass
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -74,6 +75,7 @@ class LinearClassifier(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             self.W -= learning_rate * grad
+
             pass
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -103,6 +105,8 @@ class LinearClassifier(object):
         # Implement this method. Store the predicted labels in y_pred.            #
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+        scores = X.dot(self.W)
+        y_pred = np.argmax(scores, axis = 1)
 
         pass
 
@@ -132,11 +136,6 @@ class LinearSVM(LinearClassifier):
 
     def loss(self, X_batch, y_batch, reg):
         return svm_loss_vectorized(self.W, X_batch, y_batch, reg)
-    
-    def predict(self, X_batch):
-      scores = X_batch.dot(self.W)
-      y = np.argmax(scores, axis=1)
-      return y
 
 
 class Softmax(LinearClassifier):
